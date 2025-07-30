@@ -10,7 +10,7 @@ spec:
   mode: Pipeline
   pipeline:
   - functionRef:
-      name: sijoma-my-encryption-testgo-encryption
+      name: sijoma-crossplane-functions-by-languagego-encryption
     step: go-encryption
   - functionRef:
       name: crossplane-contrib-function-auto-ready

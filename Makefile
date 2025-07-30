@@ -1,11 +1,13 @@
 
-.PHONY: render cue
+.PHONY: render
 render:
 	rm -rf golden
 	mkdir -p golden
 	up composition render apis/xencryptionkeys/go-composition.yaml examples/go-xencryptionkey.yaml --format=yaml > golden/go-xencryptionkey.yaml
 	up composition render apis/xencryptionkeys/go-tmpl-composition.yaml examples/go-tmpl-xencryptionkey.yaml --format=yaml > golden/go-tmpl-xencryptionkey.yaml
 	up composition render apis/xencryptionkeys/kcl-composition.yaml examples/kcl-xencryptionkey.yaml --format=yaml > golden/kcl-xencryptionkey.yaml
+	make cue
+
 
 .PHONY: cue
 cue:

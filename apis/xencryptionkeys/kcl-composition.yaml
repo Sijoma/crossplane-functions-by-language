@@ -9,7 +9,7 @@ spec:
   mode: Pipeline
   pipeline:
   - functionRef:
-      name: sijoma-my-encryption-testkcl-encryption
+      name: sijoma-crossplane-functions-by-languagekcl-encryption
     step: kcl-encryption
   - functionRef:
       name: crossplane-contrib-function-auto-ready

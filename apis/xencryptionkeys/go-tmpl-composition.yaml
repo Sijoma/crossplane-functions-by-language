@@ -9,7 +9,7 @@ spec:
   mode: Pipeline
   pipeline:
   - functionRef:
-      name: sijoma-my-encryption-testgo-tmpl-encryption
+      name: sijoma-crossplane-functions-by-languagego-tmpl-encryption
     step: go-tmpl-encryption
   - functionRef:
       name: crossplane-contrib-function-auto-ready

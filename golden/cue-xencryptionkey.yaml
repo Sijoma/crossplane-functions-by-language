@@ -1,0 +1,50 @@
+Checking dependencies …
+Checking dependencies ✓
+Generating language schemas …
+Generating language schemas ✓
+Building functions …
+Building functions ✓
+Building configuration package …
+Building configuration package ✓
+Pushing embedded functions to local daemon …
+Pushing embedded functions to local daemon ✓
+Rendering …
+Rendering ✓ 
+---
+apiVersion: sijoma.io/v1alpha1
+kind: XEncryptionKey
+metadata:
+  name: my-encryption-key
+status:
+  conditions:
+  - lastTransitionTime: "2024-01-01T00:00:00Z"
+    message: 'Unready resources: encryptionkey'
+    reason: Creating
+    status: "False"
+    type: Ready
+  dummy: cool-status
+---
+apiVersion: kms.gcp.upbound.io/v1beta2
+kind: CryptoKey
+metadata:
+  annotations:
+    crossplane.io/composition-resource-name: encryptionkey
+  generateName: my-encryption-key-
+  labels:
+    crossplane.io/composite: my-encryption-key
+  name: my-encryption-key-encryption
+  ownerReferences:
+  - apiVersion: sijoma.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: XEncryptionKey
+    name: my-encryption-key
+    uid: ""
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    versionTemplate:
+      algorithm: GOOGLE_SYMMETRIC_ENCRYPTION
+      protectionLevel: Hardware
+  managementPolicies:
+  - '*'
