@@ -1,0 +1,8 @@
+apiVersion: sijoma.io/v1alpha1
+kind: XEncryptionKey
+metadata:
+  name: my-encryption-key
+spec:
+  compositionRef:
+    name: cue.xencryptionkeys.sijoma.io
+  protectionLevel: Hardware

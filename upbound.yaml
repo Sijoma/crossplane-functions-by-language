@@ -1,0 +1,19 @@
+apiVersion: meta.dev.upbound.io/v1alpha1
+kind: Project
+metadata:
+  name: crossplane-functions-by-language
+spec:
+  dependsOn:
+  - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+    version: '>=v0.0.0'
+  - provider: xpkg.upbound.io/upbound/provider-gcp-kms
+    version: v1
+  - function: xpkg.upbound.io/crossplane-contrib/function-cue
+    version: v0.4.1
+  description: Implementing the same CryptoKey resource with different languages.
+  license: Apache-2.0
+  maintainer: Sijoma
+  readme: |
+    RTFM!
+  repository: xpkg.upbound.io/sijoma/crossplane-functions-by-language
+  source: github.com/sijoma/crossplane-functions-by-language

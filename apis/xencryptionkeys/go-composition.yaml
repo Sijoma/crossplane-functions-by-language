@@ -1,0 +1,17 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: go.xencryptionkeys.sijoma.io
+spec:
+  compositeTypeRef:
+    apiVersion: sijoma.io/v1alpha1
+    kind: XEncryptionKey
+    
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: sijoma-my-encryption-testgo-encryption
+    step: go-encryption
+  - functionRef:
+      name: crossplane-contrib-function-auto-ready
+    step: crossplane-contrib-function-auto-ready

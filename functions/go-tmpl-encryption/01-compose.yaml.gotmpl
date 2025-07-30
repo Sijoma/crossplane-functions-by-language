@@ -1,0 +1,15 @@
+---
+apiVersion: kms.gcp.upbound.io/v1beta2
+kind: CryptoKey
+metadata:
+  name: {{ $resourceName }}
+  annotations:
+    {{ setResourceNameAnnotation $resourceName }}
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    versionTemplate:
+      algorithm: "GOOGLE_SYMMETRIC_ENCRYPTION"
+      protectionLevel: "{{ $xr.spec.protectionLevel }}"
+  managementPolicies:
+  - '*'

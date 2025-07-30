@@ -1,0 +1,47 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: cue.xencryptionkeys.sijoma.io
+spec:
+  compositeTypeRef:
+    apiVersion: sijoma.io/v1alpha1
+    kind: XEncryptionKey
+    
+  mode: Pipeline
+  pipeline:
+  - step: run cue composition
+    functionRef:
+      name: crossplane-contrib-function-cue
+    input:
+      apiVersion: fn-cue/v1    # can be anything
+      kind: CueFunctionParams  # can be anything
+      source: Inline         # only Inline is supported for now
+      script: |              # text of cue program
+        // create some global variables
+        composite: #request.observed.composite.resource
+        compName:  composite.metadata.name + "-encryption"
+        
+        // Create CryptoKey resource
+        response: desired: resources: encryptionkey: resource: {
+          apiVersion: "kms.gcp.upbound.io/v1beta2"
+          kind:       "CryptoKey"
+          metadata: {
+            name: compName 
+          }
+          spec: {
+            forProvider: versionTemplate:{
+                protectionLevel: composite.spec.protectionLevel
+                algorithm:       "GOOGLE_SYMMETRIC_ENCRYPTION"
+            }
+            deletionPolicy: "Delete"
+            managementPolicies: ["*"]
+          }
+        }
+        // Update status
+        response: desired: composite: resource: status: dummy: "cool-status"
+
+      # show inputs and outputs for the composition in the pod log in pretty format
+      debug: true
+  - functionRef:
+      name: crossplane-contrib-function-auto-ready
+    step: crossplane-contrib-function-auto-ready
